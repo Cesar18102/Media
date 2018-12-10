@@ -13,7 +13,7 @@ CREATE TABLE Genre(
 CREATE TABLE Disc(
     
   	id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name char(100) NOT NULL,
+    name TEXT NOT NULL,
     price FLOAT NOT NULL,
     author_id INTEGER NOT NULL,
     genre_id INTEGER NOT NULL,

@@ -149,5 +149,25 @@ namespace Market
 
             UpdateDGV();
         }
+
+        private void EditPrice_Click(object sender, EventArgs e)
+        {
+            if (!IDS.Contains(Convert.ToInt32(DelId.Value)))
+            {
+                MessageBox.Show("Диска с указанным ID не существует!");
+                return;
+            }
+
+            MySqlCommand C = new MySqlCommand("UPDATE disc SET price = @price WHERE id = @id", MSC);
+
+            C.Parameters.Add("@price", NewPrice.Value.ToString());
+            C.Parameters.Add("@id", DelId.Value.ToString());
+
+            C.ExecuteNonQuery();
+
+            UpdateDGV();
+
+            MessageBox.Show("Цена успешно изменена!");
+        }
     }
 }

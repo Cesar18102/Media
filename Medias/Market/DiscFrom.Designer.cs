@@ -45,11 +45,15 @@
             this.RemoveDisc = new System.Windows.Forms.Button();
             this.DelId = new System.Windows.Forms.NumericUpDown();
             this.ID = new System.Windows.Forms.Label();
+            this.NewPrice = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.EditPrice = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DiscList)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DiscPrice)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DelId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NewPrice)).BeginInit();
             this.SuspendLayout();
             // 
             // DiscList
@@ -202,6 +206,9 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.EditPrice);
+            this.panel2.Controls.Add(this.NewPrice);
+            this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.RemoveDisc);
             this.panel2.Controls.Add(this.DelId);
             this.panel2.Controls.Add(this.ID);
@@ -216,7 +223,7 @@
             // 
             this.RemoveDisc.Location = new System.Drawing.Point(3, 47);
             this.RemoveDisc.Name = "RemoveDisc";
-            this.RemoveDisc.Size = new System.Drawing.Size(377, 185);
+            this.RemoveDisc.Size = new System.Drawing.Size(377, 65);
             this.RemoveDisc.TabIndex = 7;
             this.RemoveDisc.Text = "Удалить диск";
             this.RemoveDisc.UseVisualStyleBackColor = true;
@@ -237,6 +244,48 @@
             this.ID.Size = new System.Drawing.Size(37, 24);
             this.ID.TabIndex = 0;
             this.ID.Text = "ID: ";
+            // 
+            // NewPrice
+            // 
+            this.NewPrice.DecimalPlaces = 2;
+            this.NewPrice.Location = new System.Drawing.Point(145, 123);
+            this.NewPrice.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.NewPrice.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.NewPrice.Name = "NewPrice";
+            this.NewPrice.Size = new System.Drawing.Size(226, 29);
+            this.NewPrice.TabIndex = 12;
+            this.NewPrice.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(5, 125);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(123, 24);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "Новая цена: ";
+            // 
+            // EditPrice
+            // 
+            this.EditPrice.Location = new System.Drawing.Point(3, 167);
+            this.EditPrice.Name = "EditPrice";
+            this.EditPrice.Size = new System.Drawing.Size(377, 65);
+            this.EditPrice.TabIndex = 14;
+            this.EditPrice.Text = "Редактировать цену";
+            this.EditPrice.UseVisualStyleBackColor = true;
+            this.EditPrice.Click += new System.EventHandler(this.EditPrice_Click);
             // 
             // DiscFrom
             // 
@@ -259,6 +308,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DelId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NewPrice)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -282,5 +332,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox SearchName;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button EditPrice;
+        private System.Windows.Forms.NumericUpDown NewPrice;
+        private System.Windows.Forms.Label label6;
     }
 }
