@@ -217,6 +217,7 @@
             this.ClientList.RowHeadersVisible = false;
             this.ClientList.Size = new System.Drawing.Size(843, 305);
             this.ClientList.TabIndex = 3;
+            this.ClientList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClientList_CellClick);
             // 
             // ClientForm
             // 
@@ -231,6 +232,7 @@
             this.Name = "ClientForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ClientForm";
+            this.Load += new System.EventHandler(this.ClientForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DelID)).EndInit();

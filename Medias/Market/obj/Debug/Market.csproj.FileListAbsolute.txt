@@ -36,3 +36,4 @@ C:\Users\olehk\Documents\Visual Studio 2012\Projects\Medias\Market\bin\Debug\Mar
 C:\Users\olehk\Documents\Visual Studio 2012\Projects\Medias\Market\bin\Debug\Microsoft.Office.Tools.Word.v4.0.Utilities.dll
 C:\Users\olehk\Documents\Visual Studio 2012\Projects\Medias\Market\bin\Debug\Microsoft.Office.Tools.Word.v4.0.Utilities.xml
 C:\Users\olehk\Documents\Visual Studio 2012\Projects\Medias\Market\obj\Debug\Market.SellerForm.resources
+C:\Users\olehk\Documents\Visual Studio 2012\Projects\Medias\Market\obj\Debug\Market.ParseForm.resources

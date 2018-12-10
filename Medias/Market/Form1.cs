@@ -133,6 +133,38 @@ namespace Market
                             }, SPL, "Отчет по покупкам");
         }
 
+        private void GenreStats_Click(object sender, EventArgs e)
+        {
+            Constants.Init(ref MSC, ref MDA, "SELECT D.name AS disk, A.name AS author, G.name AS genre, COUNT(P.id) AS count " +
+                                                    "FROM disc D, author A, genre G, purchase P " +
+                                                    "WHERE D.author_id = A.id AND D.genre_id = G.id AND P.disk_id = D.id " + 
+                                                    "GROUP BY D.id");
+            DataTable DT = new DataTable();
+            MDA.Fill(DT);
+            List<SELLS> SL = new List<SELLS>();
+
+            for (int i = 0; i < DT.Rows.Count; i++)
+                SL.Add(new SELLS(new Disk(DT.Rows[i]["disk"].ToString(), 0, 
+                                          DT.Rows[i]["author"].ToString(), 
+                                          DT.Rows[i]["genre"].ToString()), 
+                                 Convert.ToInt32(DT.Rows[i]["count"])));
+
+
+            PrintWord<SELLS>(new List<string>() { "Название диска", "Автор", "Жанр", "Количество проданных" },
+                            (S, i) => {
+
+                                SELLS SLS = S as SELLS;
+                                switch (i) {
+
+                                    case 0: return SLS.D.name; break;
+                                    case 1: return SLS.D.author; break;
+                                    case 2: return SLS.D.genre; break;
+                                    case 3: return SLS.Count.ToString(); break;
+                                    default: return ""; break;
+                                }
+                            }, SL, "Статистика продаж");
+        }
+
         private void PrintWord<Q>(List<string> headers, ValueAt<Q> V, List<Q> Values, string head)
         {
 
@@ -147,7 +179,7 @@ namespace Market
             Document.PageSetup.Orientation = Word.WdOrientation.wdOrientLandscape;
             R = Document.Sections[1].Range;
 
-            T = Document.Tables.Add(R, Values.Count + 2, headers.Count, missingObj, missingObj);
+            T = Document.Tables.Add(R, Values.Count + 3, headers.Count, missingObj, missingObj);
             T.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
             T.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
 
@@ -175,9 +207,26 @@ namespace Market
                     T.Rows[i + 3].Cells[j + 1].Range.Text = V(Values[i], j);
                 }
 
-            Document.Save();
-            Document.Close(missingObj, missingObj, missingObj);
+            T.Rows[Values.Count + 3].Cells.Merge();
+            T.Rows[Values.Count + 3].Cells[1].Range.Text = DateTime.Now.ToShortDateString();
+            T.Rows[Values.Count + 3].Cells[1].Range.Font.Size = 14;
+            T.Rows[Values.Count + 3].Cells[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
+            T.Rows[Values.Count + 3].Cells[1].Range.Borders.Enable = 0;
+
+            try
+            {
+                Document.Save();
+                Document.Close(missingObj, missingObj, missingObj);
+            }
+            catch { MessageBox.Show("Отчет не создан!", "Ошибка"); }
+
             this.UseWaitCursor = false;
+        }
+
+        private void Parse_Click(object sender, EventArgs e)
+        {
+            ParseForm PF = new ParseForm();
+            PF.ShowDialog();
         }
     }
 }

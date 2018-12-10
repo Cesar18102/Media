@@ -20,13 +20,28 @@ namespace Market
         private List<int> IDS = new List<int>();
         private List<int> Author_IDS = new List<int>();
         private List<int> Genre_IDS = new List<int>();
+
+        private int SEL_ROW = -1;
         
         public DiscFrom()
         {
             InitializeComponent();
 
-            Constants.Init(ref MSC, ref MDA, "SELECT * FROM disc");
+            Constants.Init(ref MSC, ref MDA, "SELECT D.id AS ID, D.name AS НАЗВАНИЕ, D.price AS ЦЕНА, A.name AS АВТОР, G.name AS ЖАНР " + 
+                                             "FROM disc D, Author A, Genre G " + 
+                                             "WHERE D.author_id = A.id AND D.genre_id = G.id");
             Update();
+            UpdateDGV();
+        }
+
+        private void DiscFrom_Load(object sender, EventArgs e)
+        {
+            Constants.DataGridViewRowSelected(DiscList, ref SEL_ROW, 0);
+        }
+
+        private void DiscList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Constants.DataGridViewRowSelected(DiscList, ref SEL_ROW, e.RowIndex);
         }
 
         private void AddProduct_Click(object sender, EventArgs e)
@@ -43,7 +58,7 @@ namespace Market
 
             C.ExecuteNonQuery();
 
-            Update();
+            UpdateDGV();
 
             MessageBox.Show("Диск успешно добавлен!");
         }
@@ -62,16 +77,18 @@ namespace Market
 
             C.ExecuteNonQuery();
 
-            Update();
+            UpdateDGV();
 
             MessageBox.Show("Диск успешно удален!");
         }
 
-        private void Update()
+        private void UpdateDGV()
         {
             DT = new DataTable();
             MDA.Fill(DT);
             DiscList.DataSource = DT;
+
+            Constants.DataGridViewRowSelected(DiscList, ref SEL_ROW, SEL_ROW);
 
             for (int i = 0; i < DiscList.RowCount; i++)
                 IDS.Add(Convert.ToInt32(DiscList.Rows[i].Cells["id"].Value));
@@ -84,7 +101,10 @@ namespace Market
                 DelId.Minimum = IDS.Min();
                 DelId.Maximum = IDS.Max();
             }
+        }
 
+        private void Update()
+        {
             MySqlDataAdapter Author_DA = new MySqlDataAdapter();
             Author_DA.SelectCommand = new MySqlCommand("SELECT * FROM author", MSC);
 
@@ -119,6 +139,15 @@ namespace Market
                 DiscAuthor.SelectedIndex = 0;
                 DiscGenre.SelectedIndex = 0;
             }
+        }
+
+        private void SearchName_TextChanged(object sender, EventArgs e)
+        {
+            MDA.SelectCommand = new MySqlCommand("SELECT D.id AS ID, D.name AS НАЗВАНИЕ, D.price AS ЦЕНА, A.name AS АВТОР, G.name AS ЖАНР " +
+                                                "FROM disc D, Author A, Genre G " +
+                                                "WHERE D.author_id = A.id AND D.genre_id = G.id AND INSTR(D.name, '" + SearchName.Text + "') = 1", MSC);
+
+            UpdateDGV();
         }
     }
 }

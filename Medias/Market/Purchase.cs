@@ -23,12 +23,27 @@ namespace Market
         private List<int> Client_IDS = new List<int>();
         private List<int> Seller_IDS = new List<int>();
 
+        private int SEL_ROW = -1;
+
         public Purchase()
         {
             InitializeComponent();
 
-            Constants.Init(ref MSC, ref MDA, "SELECT * FROM purchase");
+            Constants.Init(ref MSC, ref MDA, "SELECT P.id AS ID, D.name AS ДИСК, C.name AS КЛИЕНТ, S.name AS ПРОДАВЕЦ " + 
+                                             "FROM purchase P, disc D, client C, seller S " + 
+                                             "WHERE P.disk_id = D.id AND P.client_id = C.id AND P.seller_id = S.id");
             Update();
+            UpdateDrops();
+        }
+
+        private void Purchase_Load(object sender, EventArgs e)
+        {
+            Constants.DataGridViewRowSelected(DealList, ref SEL_ROW, 0);
+        }
+
+        private void DealList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Constants.DataGridViewRowSelected(DealList, ref SEL_ROW, e.RowIndex);
         }
 
         private void AddDeal_Click(object sender, EventArgs e)
@@ -47,29 +62,22 @@ namespace Market
 
         private void Update()
         {
+            DT = new DataTable();
+            MDA.Fill(DT);
+            DealList.DataSource = DT;
+
+            Constants.DataGridViewRowSelected(DealList, ref SEL_ROW, SEL_ROW);
+        }
+
+        private void UpdateDrops()
+        {
             Disc.Items.Clear();
+
             Client.Items.Clear();
             Seller.Items.Clear();
 
             SellerVAL.Items.Clear();
             ClientVAL.Items.Clear();
-
-            DT = new DataTable();
-            MDA.Fill(DT);
-            DealList.DataSource = DT;
-
-            MySqlDataAdapter Disc_DA = new MySqlDataAdapter();
-            Disc_DA.SelectCommand = new MySqlCommand("SELECT * FROM disc", MSC);
-
-            DataTable Disc_DT = new DataTable();
-            Disc_DA.Fill(Disc_DT);
-
-            for (int i = 0; i < Disc_DT.Rows.Count; i++) {
-
-                Disc_IDS.Add(Convert.ToInt32(Disc_DT.Rows[i]["id"]));
-                Disc.Items.Add(Disc_DT.Rows[i]["name"].ToString());
-            }
-
 
             MySqlDataAdapter Client_DA = new MySqlDataAdapter();
             Client_DA.SelectCommand = new MySqlCommand("SELECT * FROM client", MSC);
@@ -77,7 +85,8 @@ namespace Market
             DataTable Client_DT = new DataTable();
             Client_DA.Fill(Client_DT);
 
-            for (int i = 0; i < Client_DT.Rows.Count; i++) {
+            for (int i = 0; i < Client_DT.Rows.Count; i++)
+            {
 
                 Client_IDS.Add(Convert.ToInt32(Client_DT.Rows[i]["id"]));
                 Client.Items.Add(Client_DT.Rows[i]["name"].ToString());
@@ -91,15 +100,30 @@ namespace Market
             DataTable Seller_DT = new DataTable();
             Seller_DA.Fill(Seller_DT);
 
-            for (int i = 0; i < Seller_DT.Rows.Count; i++) {
+            for (int i = 0; i < Seller_DT.Rows.Count; i++)
+            {
 
                 Seller_IDS.Add(Convert.ToInt32(Seller_DT.Rows[i]["id"]));
                 Seller.Items.Add(Seller_DT.Rows[i]["name"].ToString());
                 SellerVAL.Items.Add(Seller_DT.Rows[i]["name"].ToString());
             }
 
+            MySqlDataAdapter Disc_DA = new MySqlDataAdapter();
+            Disc_DA.SelectCommand = new MySqlCommand("SELECT * FROM disc", MSC);
 
-            if (Disc_IDS.Count == 0 || Client_IDS.Count == 0 || Seller_IDS.Count == 0) {
+            DataTable Disc_DT = new DataTable();
+            Disc_DA.Fill(Disc_DT);
+
+            for (int i = 0; i < Disc_DT.Rows.Count; i++)
+            {
+
+                Disc_IDS.Add(Convert.ToInt32(Disc_DT.Rows[i]["id"]));
+                Disc.Items.Add(Disc_DT.Rows[i]["name"].ToString());
+            }
+
+
+            if (Disc_IDS.Count == 0 || Client_IDS.Count == 0 || Seller_IDS.Count == 0)
+            {
 
                 AddDeal.Enabled = false;
 
@@ -109,7 +133,8 @@ namespace Market
                 SellerCB.Checked = false;
                 SellerCB.Enabled = false;
             }
-            else {
+            else
+            {
 
                 AddDeal.Enabled = true;
                 ClientCB.Enabled = true;
@@ -118,6 +143,8 @@ namespace Market
                 Disc.SelectedIndex = 0;
                 Client.SelectedIndex = 0;
                 Seller.SelectedIndex = 0;
+                ClientVAL.SelectedIndex = 0;
+                SellerVAL.SelectedIndex = 0;
             }
         }
 
@@ -126,12 +153,15 @@ namespace Market
             string Condition = "";
 
             if (ClientCB.Checked && ClientVAL.SelectedIndex != -1)
-                Condition += "client_id=" + Client_IDS[ClientVAL.SelectedIndex];
+                Condition += "P.client_id=" + Client_IDS[ClientVAL.SelectedIndex];
 
             if (SellerCB.Checked && SellerVAL.SelectedIndex != -1)
-                Condition += "seller_id=" + Seller_IDS[SellerVAL.SelectedIndex];
+                Condition += (Condition == ""? "" : " AND ") + "P.seller_id=" + Seller_IDS[SellerVAL.SelectedIndex];
 
-            MDA.SelectCommand = new MySqlCommand("SELECT * FROM purchase" + (Condition == "" ? "" : " WHERE " + Condition), MSC);
+            MDA.SelectCommand = new MySqlCommand("SELECT P.id AS ID, D.name AS ДИСК, C.name AS КЛИЕНТ, S.name AS ПРОДАВЕЦ " + 
+                                                 "FROM purchase P, disc D, client C, seller S " + 
+                                                 "WHERE P.disk_id = D.id AND P.client_id = C.id AND P.seller_id = S.id" + 
+                                                 (Condition == "" ? "" : " AND " + Condition), MSC);
 
             Update();
         }

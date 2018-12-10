@@ -19,12 +19,24 @@ namespace Market
 
         private List<int> IDS = new List<int>();
 
+        private int SEL_ROW = -1;
+
         public ClientForm()
         {
             InitializeComponent();
 
             Constants.Init(ref MSC, ref MDA, "SELECT * FROM client");
             Update();
+        }
+
+        private void ClientForm_Load(object sender, EventArgs e)
+        {
+            Constants.DataGridViewRowSelected(ClientList, ref SEL_ROW, 0);
+        }
+
+        private void ClientList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Constants.DataGridViewRowSelected(ClientList, ref SEL_ROW, e.RowIndex);
         }
 
         private void HireWorker_Click(object sender, EventArgs e)
@@ -66,6 +78,8 @@ namespace Market
             DT = new DataTable();
             MDA.Fill(DT);
             ClientList.DataSource = DT;
+
+            Constants.DataGridViewRowSelected(ClientList, ref SEL_ROW, SEL_ROW);
 
             for (int i = 0; i < ClientList.RowCount; i++)
                 IDS.Add(Convert.ToInt32(ClientList.Rows[i].Cells["id"].Value));

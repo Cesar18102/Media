@@ -19,12 +19,24 @@ namespace Market
 
         private List<int> IDS = new List<int>();
 
+        private int SEL_ROW = -1;
+
         public GenreForm()
         {
             InitializeComponent();
 
             Constants.Init(ref MSC, ref MDA, "SELECT * FROM genre");
             Update();
+        }
+
+        private void GenreForm_Load(object sender, EventArgs e)
+        {
+            Constants.DataGridViewRowSelected(GenreList, ref SEL_ROW, 0);
+        }
+
+        private void GenreList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Constants.DataGridViewRowSelected(GenreList, ref SEL_ROW, e.RowIndex);
         }
 
         private void AddPost_Click(object sender, EventArgs e)
@@ -62,6 +74,8 @@ namespace Market
             DT = new DataTable();
             MDA.Fill(DT);
             GenreList.DataSource = DT;
+
+            Constants.DataGridViewRowSelected(GenreList, ref SEL_ROW, SEL_ROW);
 
             for (int i = 0; i < GenreList.RowCount; i++)
                 IDS.Add(Convert.ToInt32(GenreList.Rows[i].Cells["id"].Value));

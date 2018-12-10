@@ -37,6 +37,8 @@
             this.Summary = new System.Windows.Forms.Button();
             this.DealReport = new System.Windows.Forms.Button();
             this.DiscReport = new System.Windows.Forms.Button();
+            this.GenreStats = new System.Windows.Forms.Button();
+            this.Parse = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Client
@@ -129,11 +131,33 @@
             this.DiscReport.UseVisualStyleBackColor = true;
             this.DiscReport.Click += new System.EventHandler(this.SypplyReport_Click);
             // 
+            // GenreStats
+            // 
+            this.GenreStats.Location = new System.Drawing.Point(12, 480);
+            this.GenreStats.Name = "GenreStats";
+            this.GenreStats.Size = new System.Drawing.Size(367, 46);
+            this.GenreStats.TabIndex = 11;
+            this.GenreStats.Text = "Статистика по жанрам";
+            this.GenreStats.UseVisualStyleBackColor = true;
+            this.GenreStats.Click += new System.EventHandler(this.GenreStats_Click);
+            // 
+            // Parse
+            // 
+            this.Parse.Location = new System.Drawing.Point(12, 532);
+            this.Parse.Name = "Parse";
+            this.Parse.Size = new System.Drawing.Size(367, 46);
+            this.Parse.TabIndex = 12;
+            this.Parse.Text = "Парсинг";
+            this.Parse.UseVisualStyleBackColor = true;
+            this.Parse.Click += new System.EventHandler(this.Parse_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(395, 480);
+            this.ClientSize = new System.Drawing.Size(395, 585);
+            this.Controls.Add(this.Parse);
+            this.Controls.Add(this.GenreStats);
             this.Controls.Add(this.DealReport);
             this.Controls.Add(this.DiscReport);
             this.Controls.Add(this.Summary);
@@ -163,6 +187,8 @@
         private System.Windows.Forms.Button Summary;
         private System.Windows.Forms.Button DealReport;
         private System.Windows.Forms.Button DiscReport;
+        private System.Windows.Forms.Button GenreStats;
+        private System.Windows.Forms.Button Parse;
     }
 }
 

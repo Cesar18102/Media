@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ClientCB = new System.Windows.Forms.CheckBox();
+            this.ClientVAL = new System.Windows.Forms.ComboBox();
             this.Seller = new System.Windows.Forms.ComboBox();
             this.Client = new System.Windows.Forms.ComboBox();
+            this.SellerCB = new System.Windows.Forms.CheckBox();
+            this.SellerVAL = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.Disc = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.AddDeal = new System.Windows.Forms.Button();
             this.DealList = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.SellerVAL = new System.Windows.Forms.ComboBox();
-            this.SellerCB = new System.Windows.Forms.CheckBox();
-            this.ClientCB = new System.Windows.Forms.CheckBox();
-            this.ClientVAL = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DealList)).BeginInit();
             this.SuspendLayout();
@@ -67,6 +67,27 @@
             this.panel1.Size = new System.Drawing.Size(708, 269);
             this.panel1.TabIndex = 6;
             // 
+            // ClientCB
+            // 
+            this.ClientCB.AutoSize = true;
+            this.ClientCB.Location = new System.Drawing.Point(411, 216);
+            this.ClientCB.Name = "ClientCB";
+            this.ClientCB.Size = new System.Drawing.Size(104, 28);
+            this.ClientCB.TabIndex = 24;
+            this.ClientCB.Text = "Клиент: ";
+            this.ClientCB.UseVisualStyleBackColor = true;
+            this.ClientCB.CheckedChanged += new System.EventHandler(this.Filter_Changed);
+            // 
+            // ClientVAL
+            // 
+            this.ClientVAL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ClientVAL.FormattingEnabled = true;
+            this.ClientVAL.Location = new System.Drawing.Point(521, 214);
+            this.ClientVAL.Name = "ClientVAL";
+            this.ClientVAL.Size = new System.Drawing.Size(170, 32);
+            this.ClientVAL.TabIndex = 23;
+            this.ClientVAL.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
+            // 
             // Seller
             // 
             this.Seller.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -84,6 +105,36 @@
             this.Client.Name = "Client";
             this.Client.Size = new System.Drawing.Size(499, 32);
             this.Client.TabIndex = 21;
+            // 
+            // SellerCB
+            // 
+            this.SellerCB.AutoSize = true;
+            this.SellerCB.Location = new System.Drawing.Point(12, 216);
+            this.SellerCB.Name = "SellerCB";
+            this.SellerCB.Size = new System.Drawing.Size(129, 28);
+            this.SellerCB.TabIndex = 19;
+            this.SellerCB.Text = "Продавец: ";
+            this.SellerCB.UseVisualStyleBackColor = true;
+            this.SellerCB.CheckedChanged += new System.EventHandler(this.Filter_Changed);
+            // 
+            // SellerVAL
+            // 
+            this.SellerVAL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SellerVAL.FormattingEnabled = true;
+            this.SellerVAL.Location = new System.Drawing.Point(147, 214);
+            this.SellerVAL.Name = "SellerVAL";
+            this.SellerVAL.Size = new System.Drawing.Size(170, 32);
+            this.SellerVAL.TabIndex = 14;
+            this.SellerVAL.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(298, 169);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(102, 24);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Фильтры: ";
             // 
             // Disc
             // 
@@ -144,55 +195,7 @@
             this.DealList.RowHeadersVisible = false;
             this.DealList.Size = new System.Drawing.Size(711, 305);
             this.DealList.TabIndex = 5;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(298, 169);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 24);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Фильтры: ";
-            // 
-            // SellerVAL
-            // 
-            this.SellerVAL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SellerVAL.FormattingEnabled = true;
-            this.SellerVAL.Location = new System.Drawing.Point(147, 214);
-            this.SellerVAL.Name = "SellerVAL";
-            this.SellerVAL.Size = new System.Drawing.Size(170, 32);
-            this.SellerVAL.TabIndex = 14;
-            this.SellerVAL.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
-            // 
-            // SellerCB
-            // 
-            this.SellerCB.AutoSize = true;
-            this.SellerCB.Location = new System.Drawing.Point(12, 216);
-            this.SellerCB.Name = "SellerCB";
-            this.SellerCB.Size = new System.Drawing.Size(129, 28);
-            this.SellerCB.TabIndex = 19;
-            this.SellerCB.Text = "Продавец: ";
-            this.SellerCB.UseVisualStyleBackColor = true;
-            this.SellerCB.CheckedChanged += new System.EventHandler(this.Filter_Changed);
-            // 
-            // ClientCB
-            // 
-            this.ClientCB.AutoSize = true;
-            this.ClientCB.Location = new System.Drawing.Point(411, 216);
-            this.ClientCB.Name = "ClientCB";
-            this.ClientCB.Size = new System.Drawing.Size(104, 28);
-            this.ClientCB.TabIndex = 24;
-            this.ClientCB.Text = "Клиент: ";
-            this.ClientCB.UseVisualStyleBackColor = true;
-            // 
-            // ClientVAL
-            // 
-            this.ClientVAL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ClientVAL.FormattingEnabled = true;
-            this.ClientVAL.Location = new System.Drawing.Point(521, 214);
-            this.ClientVAL.Name = "ClientVAL";
-            this.ClientVAL.Size = new System.Drawing.Size(170, 32);
-            this.ClientVAL.TabIndex = 23;
+            this.DealList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DealList_CellClick);
             // 
             // Purchase
             // 
@@ -206,6 +209,7 @@
             this.Name = "Purchase";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DealForm";
+            this.Load += new System.EventHandler(this.Purchase_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DealList)).EndInit();

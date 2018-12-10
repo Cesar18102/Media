@@ -19,12 +19,24 @@ namespace Market
 
         private List<int> IDS = new List<int>();
 
+        private int SEL_ROW = -1;
+
         public SellerForm()
         {
             InitializeComponent();
 
             Constants.Init(ref MSC, ref MDA, "SELECT * FROM seller");
             Update();
+        }
+
+        private void SellerForm_Load(object sender, EventArgs e)
+        {
+            Constants.DataGridViewRowSelected(SellerList, ref SEL_ROW, 0);
+        }
+
+        private void SellerList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Constants.DataGridViewRowSelected(SellerList, ref SEL_ROW, e.RowIndex);
         }
 
         private void AddSeller_Click(object sender, EventArgs e)
@@ -65,6 +77,8 @@ namespace Market
             DT = new DataTable();
             MDA.Fill(DT);
             SellerList.DataSource = DT;
+
+            Constants.DataGridViewRowSelected(SellerList, ref SEL_ROW, SEL_ROW);
 
             for (int i = 0; i < SellerList.RowCount; i++)
                 IDS.Add(Convert.ToInt32(SellerList.Rows[i].Cells["id"].Value));

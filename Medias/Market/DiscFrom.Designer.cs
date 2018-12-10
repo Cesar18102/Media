@@ -30,6 +30,10 @@
         {
             this.DiscList = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.SearchName = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.DiscGenre = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.DiscAuthor = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.AddDisc = new System.Windows.Forms.Button();
@@ -41,8 +45,6 @@
             this.RemoveDisc = new System.Windows.Forms.Button();
             this.DelId = new System.Windows.Forms.NumericUpDown();
             this.ID = new System.Windows.Forms.Label();
-            this.DiscGenre = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DiscList)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DiscPrice)).BeginInit();
@@ -63,9 +65,12 @@
             this.DiscList.RowHeadersVisible = false;
             this.DiscList.Size = new System.Drawing.Size(842, 305);
             this.DiscList.TabIndex = 0;
+            this.DiscList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DiscList_CellClick);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.SearchName);
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.DiscGenre);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.DiscAuthor);
@@ -79,8 +84,44 @@
             this.panel1.Location = new System.Drawing.Point(0, 305);
             this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(455, 206);
+            this.panel1.Size = new System.Drawing.Size(455, 241);
             this.panel1.TabIndex = 1;
+            // 
+            // SearchName
+            // 
+            this.SearchName.Location = new System.Drawing.Point(212, 203);
+            this.SearchName.MaxLength = 100;
+            this.SearchName.Name = "SearchName";
+            this.SearchName.Size = new System.Drawing.Size(238, 29);
+            this.SearchName.TabIndex = 11;
+            this.SearchName.TextChanged += new System.EventHandler(this.SearchName_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 206);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(194, 24);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Поиск по названию: ";
+            // 
+            // DiscGenre
+            // 
+            this.DiscGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DiscGenre.FormattingEnabled = true;
+            this.DiscGenre.Location = new System.Drawing.Point(121, 82);
+            this.DiscGenre.Name = "DiscGenre";
+            this.DiscGenre.Size = new System.Drawing.Size(329, 32);
+            this.DiscGenre.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 85);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 24);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Жанр: ";
             // 
             // DiscAuthor
             // 
@@ -168,14 +209,14 @@
             this.panel2.Location = new System.Drawing.Point(459, 305);
             this.panel2.Margin = new System.Windows.Forms.Padding(6);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(383, 206);
+            this.panel2.Size = new System.Drawing.Size(383, 241);
             this.panel2.TabIndex = 2;
             // 
             // RemoveDisc
             // 
             this.RemoveDisc.Location = new System.Drawing.Point(3, 47);
             this.RemoveDisc.Name = "RemoveDisc";
-            this.RemoveDisc.Size = new System.Drawing.Size(368, 150);
+            this.RemoveDisc.Size = new System.Drawing.Size(377, 185);
             this.RemoveDisc.TabIndex = 7;
             this.RemoveDisc.Text = "Удалить диск";
             this.RemoveDisc.UseVisualStyleBackColor = true;
@@ -197,29 +238,11 @@
             this.ID.TabIndex = 0;
             this.ID.Text = "ID: ";
             // 
-            // DiscGenre
-            // 
-            this.DiscGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DiscGenre.FormattingEnabled = true;
-            this.DiscGenre.Location = new System.Drawing.Point(121, 82);
-            this.DiscGenre.Name = "DiscGenre";
-            this.DiscGenre.Size = new System.Drawing.Size(329, 32);
-            this.DiscGenre.TabIndex = 8;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 85);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 24);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Жанр: ";
-            // 
             // DiscFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 511);
+            this.ClientSize = new System.Drawing.Size(842, 546);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.DiscList);
@@ -228,6 +251,7 @@
             this.Name = "DiscFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ProductForm";
+            this.Load += new System.EventHandler(this.DiscFrom_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DiscList)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -256,5 +280,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox DiscGenre;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox SearchName;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -133,6 +133,7 @@
             this.GenreList.RowHeadersVisible = false;
             this.GenreList.Size = new System.Drawing.Size(696, 269);
             this.GenreList.TabIndex = 3;
+            this.GenreList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GenreList_CellClick);
             // 
             // GenreForm
             // 
@@ -147,6 +148,7 @@
             this.Name = "GenreForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GenreForm";
+            this.Load += new System.EventHandler(this.GenreForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DelID)).EndInit();

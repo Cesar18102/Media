@@ -19,12 +19,24 @@ namespace Market
 
         private List<int> IDS = new List<int>();
 
+        private int SEL_ROW = -1;
+
         public AuthorForm()
         {
             InitializeComponent();
 
             Constants.Init(ref MSC, ref MDA, "SELECT * FROM author");
             Update();
+        }
+
+        private void AuthorForm_Load(object sender, EventArgs e)
+        {
+            Constants.DataGridViewRowSelected(AuthorList, ref SEL_ROW, 0);
+        }
+
+        private void AuthorList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Constants.DataGridViewRowSelected(AuthorList, ref SEL_ROW, e.RowIndex);
         }
 
         private void AddProvider_Click(object sender, EventArgs e)
@@ -65,6 +77,8 @@ namespace Market
             DT = new DataTable();
             MDA.Fill(DT);
             AuthorList.DataSource = DT;
+
+            Constants.DataGridViewRowSelected(AuthorList, ref SEL_ROW, SEL_ROW);
 
             for (int i = 0; i < AuthorList.RowCount; i++)
                 IDS.Add(Convert.ToInt32(AuthorList.Rows[i].Cells["id"].Value));

@@ -175,6 +175,7 @@
             this.AuthorList.RowHeadersVisible = false;
             this.AuthorList.Size = new System.Drawing.Size(842, 305);
             this.AuthorList.TabIndex = 3;
+            this.AuthorList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AuthorList_CellClick);
             // 
             // AuthorForm
             // 
@@ -189,6 +190,7 @@
             this.Name = "AuthorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AuthorForm";
+            this.Load += new System.EventHandler(this.AuthorForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DelID)).EndInit();
